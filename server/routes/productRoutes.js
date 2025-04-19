@@ -10,7 +10,7 @@ import {
   getTopProducts,
 } from "../controllers/productController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
-import { uploadMultiple } from "../middleware/uploadMiddleware.js"; // Import the specific function
+import { uploadSingle, uploadMultiple } from "../middleware/uploadMiddleware.js"; // Corrected path
 
 const router = express.Router();
 

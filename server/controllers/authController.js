@@ -6,21 +6,47 @@ import cloudinary from "../config/cloudinary.js";
 // @desc    Auth user & get token
 // @route   POST /api/auth/login
 // @access  Public
+// export const loginUser = asyncHandler(async (req, res) => {
+//   const { email, password } = req.body;
+
+//   const user = await User.findOne({ email });
+
+//   if (user && (await user.matchPassword(password))) {
+//     generateToken(res, user._id);
+
+//     res.json({
+//       _id: user._id,
+//       name: user.name,
+//       email: user.email,
+//       isAdmin: user.isAdmin,
+//       role: user.role,
+//       avatar: user.avatar,
+
+//     });
+//   } else {
+//     res.status(401);
+//     throw new Error("Invalid email or password");
+//   }
+// });
+// @desc    Auth user & get token
+// @route   POST /api/auth/login
+// @access  Public
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
-    generateToken(res, user._id);
+    const token = generateToken(res, user._id); // Modified to return token
 
-    res.json({
+    res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
       role: user.role,
       avatar: user.avatar,
+      token: token // Include token in response
     });
   } else {
     res.status(401);

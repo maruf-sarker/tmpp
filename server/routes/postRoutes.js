@@ -9,14 +9,14 @@ import {
   removePostReaction,
 } from "../controllers/postController.js";
 import { protect, admin, moderator } from "../middleware/authMiddleware.js";
-import upload from "../middleware/uploadMiddleware.js";
+import { uploadMultiple } from "../middleware/uploadMiddleware.js"; // Changed to named import
 
 const router = express.Router();
 
 router
   .route("/")
   .get(getPosts)
-  .post(protect, upload.array("media", 5), createPost);
+  .post(protect, uploadMultiple, createPost); // Changed to use uploadMultiple
 
 router.route("/:id").get(getPostById).delete(protect, moderator, deletePost);
 
